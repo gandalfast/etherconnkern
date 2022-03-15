@@ -1,0 +1,2 @@
+#define MAX_NUM_ETYPE_ENTRY 16
+#define MAX_SOCKS 128
