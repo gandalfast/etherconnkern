@@ -42,7 +42,6 @@ int xdp_redirect_func(struct xdp_md *ctx)
     struct ethhdr *eth;
     unsigned short eth_type;
     sizeof(void *);
-    // char fmt_str3[] = "taking action %d\n";
 
     /* These keep track of the next header type and iterator pointer */
     nh.pos = data;
@@ -53,9 +52,8 @@ int xdp_redirect_func(struct xdp_md *ctx)
     result = bpf_map_lookup_elem(&etype_list, &eth_type);
     if (!result) // rcvd pkt doesn't have expected etherType, pass it to kernel
         return XDP_PASS;
-    int *qidconf, index;
-    index = 0;
-    qidconf = bpf_map_lookup_elem(&qidconf_map, &index);
+    int index = ctx->rx_queue_index;
+    int *qidconf = bpf_map_lookup_elem(&qidconf_map, &index);
     if (!qidconf)
         return XDP_ABORTED;
 
