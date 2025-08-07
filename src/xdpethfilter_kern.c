@@ -58,15 +58,4 @@ int xdp_redirect_func(struct xdp_md *ctx)
     return bpf_redirect_map(&xsks_map, index, 0);
 }
 
-/* xdp_pass is used to attach to egress interface, this is due to limitation
-that xdp_redirect require a XDP program not only in ingress interface, but
-also a dummy one on all egress interface AND its peer (in case of veth).
-see https://github.com/xdp-project/xdp-tutorial/tree/master/packet03-redirecting
-*/
-SEC("xdp_pass_sec")
-int xdp_pass(struct xdp_md *ctx)
-{
-    return XDP_PASS;
-}
-
 char _license[] SEC("license") = "GPL";
